@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Lab5.ToggleMenu1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lab5"
+             mc:Ignorable="d"
+             >
+    <UserControl.Resources>
+        <!-- The style of the expand area -->
+        <Style x:Key="expandAreaStyle" TargetType="{x:Type Border}">
+            <Setter Property="Margin" Value="0 0 150 0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, ElementName=expandButton}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetProperty="Margin">
+                                <ThicknessAnimation To="0 0 0 0" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetProperty="Margin">
+                                <ThicknessAnimation To="0 0 150 0" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Height="188">
+        <Border x:Name="expandArea"
+            Style="{DynamicResource expandAreaStyle}"
+            Background="LightGray">
+            <Grid>
+                <!-- The expand menu button -->
+                <ToggleButton x:Name="expandButton" Background="SeaShell"
+                          Height="15"  Width="188" Content="Side Panel" Foreground="Gray" FontSize="10"
+                          HorizontalAlignment="Right" Margin="0,188,-172,-15" FontStyle="Italic">
+
+                    <ToggleButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ToggleButton.RenderTransform>
+                </ToggleButton>
+
+                <!-- The content -->
+                <Grid HorizontalAlignment="Right" Width="153">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Height="25" Margin="0,1,26,0">Affine transformations</Label>
+                    <Border Grid.Row="1" Background="Honeydew" Margin="3" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Height="25" Width="50">K:</Label>
+                            <TextBox Height="26" Width="27" Text="{Binding Path=K}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="2" Background="Honeydew" Margin="3" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Height="25" Width="auto">dx:</Label>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=Dx}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="3" Background="Honeydew" Margin="3" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Height="25" Width="auto">dy:</Label>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=Dy}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="4" Background="Honeydew" Margin="3" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Height="25" Width="auto">dz:</Label>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=Dz}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="5" Background="Honeydew" Margin="3" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Height="25" Width="auto">Angle:</Label>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=AffineAngleX}"/>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=AffineAngleY}"/>
+                            <TextBox Height="26" Width="30" Text="{Binding Path=AffineAngleZ}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

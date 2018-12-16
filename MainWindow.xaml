@@ -1,0 +1,68 @@
+﻿<Window x:Class="Lab5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:local="clr-namespace:Lab5"
+        xmlns:local1="clr-namespace:Lab5.ViewModels" Style="{DynamicResource ResourceKey=grayWindowStyle}"
+        mc:Ignorable="d" Icon="Icon1.ico" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="725" Width="1000">
+    <Window.DataContext>
+        <local1:MainViewModel></local1:MainViewModel>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Draw" Command="{Binding Draw}"></MenuItem>
+            <MenuItem Header="Palette" Command="{Binding ColorCommand}"></MenuItem>
+            <MenuItem Header="Clear" Command="{Binding Clear}"></MenuItem>
+            <MenuItem Header="Apply affine transform" Command="{Binding ApplyAffine}"></MenuItem>
+        </Menu>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Label>Camera parametres:</Label>
+            </Border>
+            <Label>Alfa:</Label>
+            <Label Content="0"></Label>
+            <Slider Width="100" Maximum="180" Value="{Binding Path=Alfa}" Margin="3,3,0,3" TickPlacement="TopLeft">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction
+                            Command="{Binding Path=Draw}"
+                            />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+            <Label Content="180"></Label>
+            <Label Content="Beta:"></Label>
+            <Label Content="0"></Label>
+            <Slider Width="100" Maximum="180" Value="{Binding Path=Beta}" Margin="3,3,0,3" TickPlacement="TopLeft" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction
+                            Command="{Binding Path=Draw}"
+                            />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+            <Label Content="180"></Label>
+            <ComboBox SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ViewTypes}">
+            </ComboBox>
+        </StackPanel>
+        <Separator Grid.Row="2" VerticalAlignment="Top" Margin="0,-2,0,0" Background="Black"></Separator>
+        <Image Grid.Row="2" Source="{Binding Path=Wb}"/>
+
+        <local:ToggleMenu R="{Binding R}" Resolution="{Binding Resolution}" Grid.Row="2"
+                          AlfaOt="{Binding AlfaOt}" AlfaDo="{Binding AlfaDo}" BetaOt="{Binding BetaOt}" 
+                          BetaDo="{Binding BetaDo}" Height="165" VerticalAlignment="Top" HorizontalAlignment="Left" Width="165"/>
+        <local:ToggleMenu1 Grid.Row="2" Height="189" VerticalAlignment="Top" HorizontalAlignment="Left" Width="165" Margin="0,165,0,0"
+                           K="{Binding K}" Dx="{Binding Dx}" Dy="{Binding Dy}" Dz="{Binding Dz}"
+                           AffineAngleX="{Binding AffineAngleX}" AffineAngleY="{Binding AffineAngleY}"
+                           AffineAngleZ="{Binding AffineAngleZ}"></local:ToggleMenu1>
+    </Grid>
+</Window>
